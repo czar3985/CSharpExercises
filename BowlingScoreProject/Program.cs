@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BowlingScoreProject
+﻿namespace BowlingScoreProject
 {
     class Program
     {

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BowlingScoreProject
 {
@@ -16,8 +14,16 @@ namespace BowlingScoreProject
         private int _score;
         private string[] _frameRolls;
         private BonusRollType[] _bonusRollType;
+        private string _userInput;
+        private int _firstRoll;
+        private int _secondRoll;
 
         public BowlingScoreCounter()
+        {
+            InitializeValues();
+        }
+
+        private void InitializeValues()
         {
             _score = 0;
             _bonusRollType = new BonusRollType[] {
@@ -29,51 +35,96 @@ namespace BowlingScoreProject
 
         public void ComputeFromInput()
         {
+            ProcessTenFrames();
+            AddBonusFramesIfNeeded();
+        }
+
+        private void ProcessTenFrames()
+        {
             Console.WriteLine("Enter pins knocked down per roll per frame separated by space");
             for (int frame = 0; frame < 10; frame++)
             {
-                Console.WriteLine("Pins knocked down for frame " + (frame+1).ToString());
-                var frameInput = Console.ReadLine();
-                _frameRolls = frameInput.Split(' ');
-
-                switch (_frameRolls.Length)
-                {
-                    case 1:
-                        // Assume correct input (10). TODO: Input checking
-                        ProcessStrike();
-                        break;
-                    case 2:
-                        ProcessSpareOrOther();
-                        break;
-                    default:
-                        break;
-                }
+                Console.WriteLine("Pins knocked down for frame " + (frame + 1).ToString());
+                GetFrameScoreFromUserInput();
+                SplitInputIntoPinsKnockedDownPerRoll();
+                ProcessSingleFrame();
             }
+        }
 
-            AddBonusFramesIfNeeded();
+        private void GetFrameScoreFromUserInput()
+        {
+            _userInput = Console.ReadLine();
+        }
+
+        private void SplitInputIntoPinsKnockedDownPerRoll()
+        {
+            _frameRolls = _userInput.Split(' ');
+        }
+
+        private void ProcessSingleFrame()
+        {
+            switch (_frameRolls.Length)
+            {
+                case 1:
+                    // Assume correct input: 10. TODO: Input checking
+                    ProcessStrike();
+                    break;
+                case 2:
+                    // Assume correct input: num1 num2. TODO: Input checking
+                    ProcessSpareOrOther();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ProcessStrike()
         {
-            _score += 10;
-            _bonusRollType[2] = BonusRollType.AddTwoRollsAfter;
-
+            AddStrikeScoreToTotal();
+            SetStrikeFlag();
             ProcessRollTypeFlags();
+        }
+
+        private void AddStrikeScoreToTotal()
+        {
+            _score += 10;
+        }
+
+        private void SetStrikeFlag()
+        {
+            _bonusRollType[2] = BonusRollType.AddTwoRollsAfter;
         }
 
         private void ProcessSpareOrOther()
         {
-            int firstRoll = Convert.ToInt32(_frameRolls[0]);
-            int secondRoll = Convert.ToInt32(_frameRolls[1]);
+            GetTheTwoRollScores();
+            AddFrameScoreToTotal();
+            SetSpareFlagOrNoFlag();
+            ProcessRollTypeFlags();
+        }
 
-            _score = _score + firstRoll + secondRoll;
+        private void GetTheTwoRollScores()
+        {
+            _firstRoll = Convert.ToInt32(_frameRolls[0]);
+            _secondRoll = Convert.ToInt32(_frameRolls[1]);
+        }
 
-            if (firstRoll + secondRoll == 10)
+        private void AddFrameScoreToTotal()
+        {
+            _score = _score + _firstRoll + _secondRoll;
+        }
+
+        private void SetSpareFlagOrNoFlag()
+        {
+            if (IsSpare())
                 _bonusRollType[2] = BonusRollType.AddRollAfter;
             else
                 _bonusRollType[2] = BonusRollType.None;
+        }
 
-            ProcessRollTypeFlags();
+        private bool IsSpare()
+        {
+            return _firstRoll + _secondRoll == 10;
         }
 
         private void ProcessRollTypeFlags()
