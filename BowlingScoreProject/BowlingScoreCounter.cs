@@ -80,6 +80,7 @@ namespace BowlingScoreProject
 
         private void ProcessStrike()
         {
+            GetTheTwoRollScores();
             AddStrikeScoreToTotal();
             SetStrikeFlag();
             ProcessRollTypeFlags();
@@ -87,7 +88,7 @@ namespace BowlingScoreProject
 
         private void AddStrikeScoreToTotal()
         {
-            _score += 10;
+            _score += _firstRoll;
         }
 
         private void SetStrikeFlag()
@@ -106,7 +107,8 @@ namespace BowlingScoreProject
         private void GetTheTwoRollScores()
         {
             _firstRoll = Convert.ToInt32(_frameRolls[0]);
-            _secondRoll = Convert.ToInt32(_frameRolls[1]);
+            if (_frameRolls.Length == 2)
+                _secondRoll = Convert.ToInt32(_frameRolls[1]);
         }
 
         private void AddFrameScoreToTotal()
@@ -129,35 +131,46 @@ namespace BowlingScoreProject
 
         private void ProcessRollTypeFlags()
         {
-            int firstRoll;
-            int secondRoll;
+            AddScoreBasedOnRollTypeAndReset();
+            SetupRollTypeForNextFrame();
+        }
 
+        private void AddScoreBasedOnRollTypeAndReset()
+        {
+            ProcessBonusTwoFramesBefore();
+            ProcessBonusOneFrameBefore();
+        }
+
+        private void ProcessBonusTwoFramesBefore()
+        {
             if (_bonusRollType[0] == BonusRollType.AddTwoRollsAfter)
             {
-                firstRoll = Convert.ToInt32(_frameRolls[0]);
-                _score += firstRoll;
+                _score += _firstRoll;
                 _bonusRollType[0] = BonusRollType.None;
             }
+        }
 
+        private void ProcessBonusOneFrameBefore()
+        {
             if (_bonusRollType[1] == BonusRollType.AddRollAfter)
             {
-                firstRoll = Convert.ToInt32(_frameRolls[0]);
-                _score += firstRoll;
+                _score += _firstRoll;
                 _bonusRollType[1] = BonusRollType.None;
             }
             else if (_bonusRollType[1] == BonusRollType.AddTwoRollsAfter)
             {
-                firstRoll = Convert.ToInt32(_frameRolls[0]);
-                _score += firstRoll;
+                _score += _firstRoll;
 
                 if (_frameRolls.Length == 2)
                 {
-                    secondRoll = Convert.ToInt32(_frameRolls[1]);
-                    _score += secondRoll;
+                    _score += _secondRoll;
                     _bonusRollType[1] = BonusRollType.None;
                 }
             }
+        }
 
+        private void SetupRollTypeForNextFrame()
+        {
             // Shift _bonusRollType flags to the left. Next flag will be
             // placed in index 2
             _bonusRollType[0] = _bonusRollType[1];
