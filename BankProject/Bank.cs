@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BankProject
+﻿namespace BankProject
 {
     interface IBank
     {
-        void Deposit(double amount);
-        void Withdraw(double amount);
+        void Deposit(double amount, IBankAccessor accessor);
+        void Withdraw(double amount, IBankAccessor accessor);
     }
 
     class Bank: IBank
@@ -30,31 +26,34 @@ namespace BankProject
 
         public double Balance { get; private set; }
 
-        public void Deposit(double amount)
+        public void Deposit(double amount, IBankAccessor accessor)
         {
             string resultMessage = "";
 
             Balance += amount;
 
-            resultMessage = $"Deposit of {amount} was successful. Balance is {Balance}.";
+            resultMessage = $"Deposit of {amount} to {accessor.AccessorType} was successful. " +
+                $"Balance is {Balance}.";
             NotificationSystem.NotifyTransactionResult(resultMessage);
 
         }
 
-        public void Withdraw(double amount)
+        public void Withdraw(double amount, IBankAccessor accessor)
         {
             string resultMessage = "";
 
             if (Balance < amount)
             {
-                resultMessage = $"Withdrawal of {amount} failed. There wasn't enough funds. Balance is {Balance}.";
+                resultMessage = $"Withdrawal of {amount} from {accessor.AccessorType} failed. " +
+                    $"There wasn't enough funds. Balance is {Balance}.";
                 NotificationSystem.NotifyTransactionResult(resultMessage);
             }
             else
             {
                 Balance -= amount;
 
-                resultMessage = $"Withdrawal of {amount} was successful. Balance is {Balance}.";
+                resultMessage = $"Withdrawal of {amount} from {accessor.AccessorType} was successful. " +
+                    $"Balance is {Balance}.";
                 NotificationSystem.NotifyTransactionResult(resultMessage);
             }
         }

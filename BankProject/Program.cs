@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BankProject
+﻿namespace BankProject
 {
     class Program
     {

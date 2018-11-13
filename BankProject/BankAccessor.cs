@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BankProject
+﻿namespace BankProject
 {
     interface IBankAccessor
     {
+        string AccessorType { get; }
+
         void Deposit(double amount);
         void Withdraw(double amount);
     }
@@ -29,15 +27,17 @@ namespace BankProject
             _bank = Bank.Instance;
         }
 
+        public string AccessorType => "Teller";
+
         public void Deposit(double amount)
         {
-            _bank.Deposit(amount);
+            _bank.Deposit(amount, this);
 
         }
 
         public void Withdraw(double amount)
         {
-            _bank.Withdraw(amount);
+            _bank.Withdraw(amount, this);
         }
     }
 
@@ -60,14 +60,16 @@ namespace BankProject
             _bank = Bank.Instance;
         }
 
+        public string AccessorType => "ATM";
+
         public void Deposit(double amount)
         {
-            _bank.Deposit(amount);
+            _bank.Deposit(amount, this);
         }
 
         public void Withdraw(double amount)
         {
-            _bank.Withdraw(amount);
+            _bank.Withdraw(amount, this);
         }
     }
 }
