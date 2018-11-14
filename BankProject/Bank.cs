@@ -57,5 +57,11 @@
                 NotificationSystem.NotifyTransactionResult(resultMessage);
             }
         }
+
+        public static void ClearInstance()
+        {
+            // to be used only for unit testing
+            _instance = null;
+        }
     }
 }
