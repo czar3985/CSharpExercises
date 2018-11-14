@@ -2,12 +2,12 @@
 
 namespace BankProject
 {
-    interface INotificationSystem
+    public interface INotificationSystem
     {
         void NotifyTransactionResult(string resultMessage);
     }
 
-    class NotificationSystem : INotificationSystem
+    public class NotificationSystem : INotificationSystem
     {
         private SMSNotifier _smsNotifier;
         private EmailNotifier _emailNotifier;

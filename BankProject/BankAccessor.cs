@@ -1,6 +1,6 @@
 ﻿namespace BankProject
 {
-    interface IBankAccessor
+    public interface IBankAccessor
     {
         string AccessorType { get; }
 
@@ -8,68 +8,69 @@
         void Withdraw(double amount);
     }
 
-    class Teller: IBankAccessor
+    public class Teller: IBankAccessor
     {
-        private IBank _bank;
-        //public IBank BankInterface {
-        //    get {
-        //        if (_bank == null)
-        //            _bank = Bank.Instance;
-        //        return _bank;
-        //    }
-        //    set {
-        //        _bank = value;
-        //    }
-        //}
+        private IBank _bankInstance;
+
+        public IBank BankInstance {
+            get {
+                if (_bankInstance == null)
+                    _bankInstance = Bank.Instance;
+                return _bankInstance;
+            }
+            set {
+                _bankInstance = value;
+            }
+        }
 
         public Teller()
         {
-            _bank = Bank.Instance;
+            BankInstance = Bank.Instance;
         }
 
         public string AccessorType => "Teller";
 
         public void Deposit(double amount)
         {
-            _bank.Deposit(amount, this);
+            BankInstance.Deposit(amount, this);
 
         }
 
         public void Withdraw(double amount)
         {
-            _bank.Withdraw(amount, this);
+            BankInstance.Withdraw(amount, this);
         }
     }
 
-    class ATM : IBankAccessor
+    public class ATM : IBankAccessor
     {
-        private IBank _bank;
-        //public IBank BankInterface {
-        //    get {
-        //        if (_bank == null)
-        //            _bank = Bank.Instance;
-        //        return _bank;
-        //    }
-        //    set {
-        //        _bank = value;
-        //    }
-        //}
+        private IBank _bankInstance;
+        public IBank BankInstance {
+            get {
+                if (_bankInstance == null)
+                    _bankInstance = Bank.Instance;
+                return _bankInstance;
+            }
+            set {
+                _bankInstance = value;
+            }
+        }
 
         public ATM()
         {
-            _bank = Bank.Instance;
+            BankInstance = Bank.Instance;
         }
 
         public string AccessorType => "ATM";
 
         public void Deposit(double amount)
         {
-            _bank.Deposit(amount, this);
+            BankInstance.Deposit(amount, this);
         }
 
         public void Withdraw(double amount)
         {
-            _bank.Withdraw(amount, this);
+            BankInstance.Withdraw(amount, this);
         }
     }
 }

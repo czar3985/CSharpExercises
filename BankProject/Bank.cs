@@ -1,12 +1,12 @@
 ﻿namespace BankProject
 {
-    interface IBank
+    public interface IBank
     {
         void Deposit(double amount, IBankAccessor accessor);
         void Withdraw(double amount, IBankAccessor accessor);
     }
 
-    class Bank: IBank
+    public class Bank: IBank
     {
         public INotificationSystem NotificationSystem { get; set; }
 
