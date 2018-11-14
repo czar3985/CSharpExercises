@@ -8,11 +8,16 @@
 
     public class Bank: IBank
     {
-        public INotificationSystem NotificationSystem { get; set; }
-
-        private Bank()
-        {
-            NotificationSystem = new NotificationSystem();
+        private INotificationSystem _notificationSystem = null;
+        public INotificationSystem NotificationSystem {
+            get {
+                if (_notificationSystem == null)
+                    _notificationSystem = new NotificationSystem();
+                return _notificationSystem;
+            }
+            set {
+                _notificationSystem = value;
+            }
         }
 
         private static Bank _instance;

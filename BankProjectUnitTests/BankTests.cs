@@ -9,12 +9,15 @@ namespace BankProjectUnitTests
     {
         private Bank _bank;
         private MockAccessor _mockAccessor;
+        private MockNotificationSystem _mockNotificationSystem;
 
         [TestInitialize]
         public void Initialize() {
             Bank.ClearInstance();
             _bank = Bank.Instance;
             _mockAccessor = new MockAccessor();
+            _mockNotificationSystem = new MockNotificationSystem();
+            _bank.NotificationSystem = _mockNotificationSystem;
         }
 
         [TestMethod]
@@ -56,6 +59,25 @@ namespace BankProjectUnitTests
 
             _bank.Withdraw(1000, _mockAccessor);
             Assert.AreEqual(0, _bank.Balance);
+        }
+
+        [TestMethod]
+        public void NotificationSytemTest()
+        {
+            _bank.Deposit(495, _mockAccessor);
+            Assert.AreEqual(
+                $"Deposit of 495 to Mock Accessor was successful. Balance is {_bank.Balance}.",
+                _mockNotificationSystem.MessageReceived);
+
+            _bank.Withdraw(125, _mockAccessor);
+            Assert.AreEqual(
+                $"Withdrawal of 125 from Mock Accessor was successful. Balance is {_bank.Balance}.",
+                _mockNotificationSystem.MessageReceived);
+
+            _bank.Withdraw(371, _mockAccessor);
+            Assert.AreEqual(
+                $"Withdrawal of 371 from Mock Accessor failed. There wasn't enough funds. Balance is {_bank.Balance}.",
+                _mockNotificationSystem.MessageReceived);
         }
     }
 }
