@@ -10,8 +10,7 @@
 
     public class Teller: IBankAccessor
     {
-        private IBank _bankInstance;
-
+        private IBank _bankInstance = null;
         public IBank BankInstance {
             get {
                 if (_bankInstance == null)
@@ -21,11 +20,6 @@
             set {
                 _bankInstance = value;
             }
-        }
-
-        public Teller()
-        {
-            BankInstance = Bank.Instance;
         }
 
         public string AccessorType => "Teller";

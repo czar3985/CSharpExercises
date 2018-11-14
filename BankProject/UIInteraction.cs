@@ -2,16 +2,46 @@
 
 namespace BankProject
 {
+    public interface IInput
+    {
+        string ReadLine();
+    }
+
+    public interface IOutput
+    {
+        void WriteLine(string message);
+    }
+
+    public class Input : IInput
+    {
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+    }
+
+    public class Output : IOutput
+    {
+        public void WriteLine(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
     class UIInteraction
     {
         private bool _isBankOpen = true;
         public IBankAccessor Teller { get; set; }
         public IBankAccessor ATM { get; set; }
+        public IInput Input { get; set; }
+        public IOutput Output { get; set; }
 
         public UIInteraction()
         {
             Teller = new Teller();
             ATM = new ATM();
+            Input = new Input();
+            Output = new Output();
         }
 
         public void OperateBank()
@@ -22,9 +52,9 @@ namespace BankProject
             {
                 string transactionInput = "";
 
-                Console.WriteLine("");
-                Console.WriteLine("Enter transaction:");
-                transactionInput = Console.ReadLine();
+                Output.WriteLine("");
+                Output.WriteLine("Enter transaction:");
+                transactionInput = Input.ReadLine();
                 var splitInput = transactionInput.Split(' ');
 
                 // TODO: input checking
@@ -52,16 +82,16 @@ namespace BankProject
             }
         }
 
-        private static void ShowBankInstructions()
+        private void ShowBankInstructions()
         {
-            Console.WriteLine("Enter transaction: t/a(Teller or ATM) d/w(Deposit or Withdrawal) Amount");
-            Console.WriteLine("Type q to Quit");
-            Console.WriteLine("Ex. t d 100");
+            Output.WriteLine("Enter transaction: t/a(Teller or ATM) d/w(Deposit or Withdrawal) Amount");
+            Output.WriteLine("Type q to Quit");
+            Output.WriteLine("Ex. t d 100");
         }
 
         private void BankIsClosed()
         {
-            Console.WriteLine("Goodbye.");
+            Output.WriteLine("Goodbye.");
             _isBankOpen = false;
         }
     }
