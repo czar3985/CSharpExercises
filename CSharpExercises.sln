@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankProject", "BankProject\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankProjectUnitTests", "BankProjectUnitTests\BankProjectUnitTests.csproj", "{637C90E5-0EF4-4F2D-BA4A-ACF04D856992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighestCardGame", "HighestCardGame\HighestCardGame.csproj", "{54D7E193-4DEA-4A57-9E11-9A0056F900F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighestCardGame", "HighestCardGame\HighestCardGame.csproj", "{54D7E193-4DEA-4A57-9E11-9A0056F900F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighestCardGameUnitTests", "HighestCardGameUnitTests\HighestCardGameUnitTests.csproj", "{F70F250E-18C2-40C7-9E85-1860DFE0D1C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{54D7E193-4DEA-4A57-9E11-9A0056F900F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54D7E193-4DEA-4A57-9E11-9A0056F900F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54D7E193-4DEA-4A57-9E11-9A0056F900F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70F250E-18C2-40C7-9E85-1860DFE0D1C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70F250E-18C2-40C7-9E85-1860DFE0D1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70F250E-18C2-40C7-9E85-1860DFE0D1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70F250E-18C2-40C7-9E85-1860DFE0D1C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
