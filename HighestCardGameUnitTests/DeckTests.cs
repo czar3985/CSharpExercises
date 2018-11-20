@@ -10,22 +10,17 @@ namespace HighestCardGameUnitTests
     {
         private Deck _deck;
 
-        [TestMethod]
-        public void DeckInitializationTest()
-        {
-            CreateANewDeck();
-            CheckNumberOfCardsInDeck();
-            CheckCardsAddedToDeck();
-        }
-
-        private void CreateANewDeck()
+        [TestInitialize]
+        public void Initialize()
         {
             _deck = new Deck();
         }
 
-        private void CheckNumberOfCardsInDeck()
+        [TestMethod]
+        public void DeckInitializationTest()
         {
-            Assert.AreEqual(52, _deck.cards.Count);
+            CheckNumberOfCardsInDeck();
+            CheckCardsAddedToDeck();
         }
 
         private void CheckCardsAddedToDeck()
@@ -42,6 +37,35 @@ namespace HighestCardGameUnitTests
                     Assert.AreEqual(((int)cardNumber * Card.numOfSuits) + (int)suit, queryResult[0].Rank);
                 }
             }
+        }
+
+        [TestMethod]
+        public void DeckShufflingTest()
+        {
+            _deck.Shuffle();
+            CheckNumberOfCardsInDeck();
+            CheckThatDeckIsShuffled();
+        }
+
+        private void CheckNumberOfCardsInDeck()
+        {
+            Assert.AreEqual(52, _deck.cards.Count);
+        }
+
+        private void CheckThatDeckIsShuffled()
+        {
+            int numOfTries = 3;
+
+            for (int i = 0; i < numOfTries; i++)
+            {
+                if (_deck.cards[0].Name != "TwoClub")
+                {
+                    return;
+                }
+                _deck.Shuffle();
+            }
+
+            Assert.Fail();
         }
     }
 }
