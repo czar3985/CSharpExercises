@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace HighestCardGame
@@ -16,6 +17,8 @@ namespace HighestCardGame
 
         public Deck()
         {
+            cards = new List<Card>();
+
             foreach (CardNumber cardNumber in Enum.GetValues(typeof(CardNumber)))
             {
                 foreach (Suit suit in Enum.GetValues(typeof(Suit)))

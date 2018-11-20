@@ -30,7 +30,7 @@ namespace HighestCardGame
 
     class Card
     {
-        const int numOfSuits = 4;
+        public const int numOfSuits = 4;
 
         public string Name { get; set; }
         public int Rank { get; set; }
