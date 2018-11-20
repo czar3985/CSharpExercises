@@ -6,6 +6,8 @@ each picks a card from a shuffled deck, the cards are compared and the player wi
 the higher ranking card wins.
 - Practice on creating a UML class diagram, determining the classes,
 clean code, test driven development
+- References:
+  - List shuffling solution from: https://stackoverflow.com/a/1262619
 
 **Bank Project and Unit Tests**
 - A console bank application that simulates deposit and withdrawal
