@@ -11,26 +11,40 @@ namespace HighestCardGame
 
     class CardGame : ICardGame
     {
-        public Deck Deck { get; set; }
-        public List<Player> Players { get; set; }
+        public Deck Deck { get; private set; }
+        public List<Player> Players { get; private set; }
+        public Player Winner { get; private set; }
+
+        private UserInteraction _userInteraction;
 
         public void StartGame()
         {
-            UserInteraction userInteraction = new UserInteraction();
-            userInteraction.GetInput();
+            StartUI();
+            PrepareDeck();
+            IdentifyPlayers();
+            DetermineWinner();
+            _userInteraction.ShowResult(Players, Winner);
+        }
 
+        private void StartUI()
+        {
+            _userInteraction = new UserInteraction();
+            _userInteraction.StartUI();
+        }
+
+        private void PrepareDeck()
+        {
             Deck = new Deck();
             Deck.Shuffle();
+        }
 
+        private void IdentifyPlayers()
+        {
             Players = new List<Player>();
             Player playerComputer = new Player { Name = "Computer", CardPicked = GetCardFromDeck() };
             Players.Add(playerComputer);
             Player playerUser = new Player { Name = "User", CardPicked = GetCardFromDeck() };
             Players.Add(playerUser);
-
-            Player winner = DetermineWinner();
-
-            userInteraction.ShowResult(Players, winner);
         }
 
         private Card GetCardFromDeck()
@@ -38,17 +52,15 @@ namespace HighestCardGame
             return Deck.GetCard();
         }
 
-        private Player DetermineWinner()
+        private void DetermineWinner()
         {
-            Player winner = Players[0];
+            Winner = Players[0];
 
             for (int i = 1; i < Players.Count; i++)
             {
-                if (Players[i].CardPicked.Rank > winner.CardPicked.Rank)
-                    winner = Players[i];
+                if (Players[i].CardPicked.Rank > Winner.CardPicked.Rank)
+                    Winner = Players[i];
             }
-
-            return winner;
         }
     }
 }

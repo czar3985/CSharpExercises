@@ -6,7 +6,7 @@ namespace HighestCardGame
 {
     class UserInteraction
     {
-        public void GetInput()
+        public void StartUI()
         {
             Console.WriteLine("Play against the computer. Get the higher card in a " +
                 "shuffled standard deck to win.");
