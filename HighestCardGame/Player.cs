@@ -4,7 +4,19 @@ using System.Text;
 
 namespace HighestCardGame
 {
-    class Player
+    interface IPlayer
     {
+
+    }
+
+    class Player : IPlayer
+    {
+        public String Name { get; set; }
+        public Card CardPicked { get; set; }
+
+        public void PickACard()
+        {
+
+        }
     }
 }

@@ -6,7 +6,9 @@ namespace HighestCardGame
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            CardGame cardGame = new CardGame();
+
+            cardGame.StartGame();
         }
     }
 }

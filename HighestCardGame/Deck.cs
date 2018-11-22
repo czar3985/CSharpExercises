@@ -49,8 +49,12 @@ namespace HighestCardGame
 
         public Card GetCard()
         {
-            // return the top card in the deck
-            return cards[0];
+            // return the top card in the deck and remove it from the deck
+            Card cardToReturn = cards[0];
+
+            cards.RemoveAt(0);
+
+            return cardToReturn;
         }
     }
 }
