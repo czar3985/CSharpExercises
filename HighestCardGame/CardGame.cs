@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HighestCardGame
 {
@@ -15,21 +13,11 @@ namespace HighestCardGame
         public List<Player> Players { get; private set; }
         public Player Winner { get; private set; }
 
-        private UserInteraction _userInteraction;
-
         public void StartGame()
         {
-            StartUI();
             PrepareDeck();
             IdentifyPlayers();
-            DetermineWinner();
-            _userInteraction.ShowResult(Players, Winner);
-        }
-
-        private void StartUI()
-        {
-            _userInteraction = new UserInteraction();
-            _userInteraction.StartUI();
+            DealCards();
         }
 
         private void PrepareDeck()
@@ -41,26 +29,25 @@ namespace HighestCardGame
         private void IdentifyPlayers()
         {
             Players = new List<Player>();
-            Player playerComputer = new Player { Name = "Computer", CardPicked = GetCardFromDeck() };
+
+            Player playerComputer = new Player { Name = "Computer" };
             Players.Add(playerComputer);
-            Player playerUser = new Player { Name = "User", CardPicked = GetCardFromDeck() };
+
+            Player playerUser = new Player { Name = "User" };
             Players.Add(playerUser);
+        }
+
+        private void DealCards()
+        {
+            foreach (var player in Players)
+            {
+                player.CardPicked = GetCardFromDeck();
+            }
         }
 
         private Card GetCardFromDeck()
         {
             return Deck.GetCard();
-        }
-
-        private void DetermineWinner()
-        {
-            Winner = Players[0];
-
-            for (int i = 1; i < Players.Count; i++)
-            {
-                if (Players[i].CardPicked.Rank > Winner.CardPicked.Rank)
-                    Winner = Players[i];
-            }
         }
     }
 }

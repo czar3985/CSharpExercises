@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HighestCardGame
 {
-    interface IPlayer
-    {
-
-    }
-
-    class Player : IPlayer
+    class Player
     {
         public String Name { get; set; }
         public Card CardPicked { get; set; }
-
-        public void PickACard()
-        {
-
-        }
     }
 }

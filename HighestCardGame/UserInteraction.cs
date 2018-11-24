@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HighestCardGame
 {
@@ -15,10 +14,11 @@ namespace HighestCardGame
             Console.ReadLine();
         }
 
-        public void ShowResult(List<Player> Players, Player winner)
+        public void ShowResult(List<Player> players, Player winner)
         {
-            Console.WriteLine("User picked " + Players[1].CardPicked.Name);
-            Console.WriteLine("Computer picked " + Players[0].CardPicked.Name);
+            Console.WriteLine("User picked " + players[1].CardPicked.Name);
+            Console.WriteLine("Computer picked " + players[0].CardPicked.Name);
+            Console.WriteLine("");
             Console.WriteLine(winner.Name + " wins!!!");
             Console.ReadLine();
         }
