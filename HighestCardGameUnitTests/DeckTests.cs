@@ -19,13 +19,15 @@ namespace HighestCardGameUnitTests
         [TestMethod]
         public void DeckInitializationTest()
         {
-            CheckNumberOfCardsInDeck();
+            const int expectedNumberOfCards = 52;
+
+            CheckNumberOfCardsInDeck(expectedNumberOfCards);
             CheckCardsAddedToDeck();
         }
 
         private void CheckCardsAddedToDeck()
         {
-            var cardList = _deck.cards.AsEnumerable();
+            var cardList = _deck.Cards.AsEnumerable();
 
             foreach (CardNumber cardNumber in Enum.GetValues(typeof(CardNumber)))
             {
@@ -42,14 +44,16 @@ namespace HighestCardGameUnitTests
         [TestMethod]
         public void DeckShufflingTest()
         {
+            int expectedNumberOfCards = _deck.Cards.Count;
             _deck.Shuffle();
-            CheckNumberOfCardsInDeck();
+            CheckNumberOfCardsInDeck(expectedNumberOfCards);
+
             CheckThatDeckIsShuffled();
         }
 
-        private void CheckNumberOfCardsInDeck()
+        private void CheckNumberOfCardsInDeck(int expectedNumberOfCards)
         {
-            Assert.AreEqual(52, _deck.cards.Count);
+            Assert.AreEqual(expectedNumberOfCards, _deck.Cards.Count);
         }
 
         private void CheckThatDeckIsShuffled()
@@ -58,7 +62,7 @@ namespace HighestCardGameUnitTests
 
             for (int i = 0; i < numOfTries; i++)
             {
-                if (_deck.cards[0].Name != "TwoClub")
+                if (_deck.Cards[0].Name != "TwoClub")
                 {
                     return;
                 }
@@ -66,6 +70,23 @@ namespace HighestCardGameUnitTests
             }
 
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void GettingACardFromDeckTest()
+        {
+            int initialNumberOfCards = _deck.Cards.Count;
+            Card topCardInitially = _deck.Cards[0];
+
+            Card cardPicked = _deck.GetCard();
+            CheckNumberOfCardsInDeck(initialNumberOfCards-1);
+
+            CheckCorrectCardIsReturned(topCardInitially, cardPicked);
+        }
+
+        private void CheckCorrectCardIsReturned(Card cardExpected, Card cardPicked)
+        {
+            Assert.AreEqual(cardExpected, cardPicked);
         }
     }
 }
