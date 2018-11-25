@@ -9,9 +9,19 @@ namespace HighestCardGame
 
     class CardGame : ICardGame
     {
-        public Deck Deck { get; private set; }
+        private IDeck _deck = null;
+        public IDeck Deck {
+            get {
+                if (_deck == null)
+                    _deck = new Deck();
+                return _deck;
+            }
+            set {
+                _deck = value;
+            }
+        }
+
         public List<Player> Players { get; private set; }
-        public Player Winner { get; private set; }
 
         public void StartGame()
         {
@@ -22,7 +32,6 @@ namespace HighestCardGame
 
         private void PrepareDeck()
         {
-            Deck = new Deck();
             Deck.Shuffle();
         }
 
